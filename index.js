@@ -1,54 +1,71 @@
+// Exportando dependências
 const express = require("express");
 const cors = require("cors");
+const routes = require("./src/routes/paleta.route.js");
 
+// Constantes
 const port = 3000;
 const app = express();
 
 //Configurando nossa aplicação para trabalhar com CORS
 app.use(express.json());
 app.use(cors());
+app.use("/paletas", routes);
 
 //Definir dados para usar na aplicação
 const paletas = [
   {
     id: 1,
     sabor: "Açaí com Leite Condensado",
-    descricao: "Açaí com Leite Condensado",
-    foto: "https://storage.googleapis.com/domain-images/60b1f285-d77c-444a-b734-1bc1efd2c472/products/gallery_bd17d9a3-cd93-44a9-9b44-f017a1c7a329.jpg",
+    descricao:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. In adipisci aspernatur dolore, numquam veniam suscipit.",
+    foto: "./assets/images/acai-com-leite-condensado.png",
     preco: 10.0,
   },
   {
     id: 2,
     sabor: "Banana com Nutella",
-    descricao: "Banana com Nutella",
-    foto: "https://storage.googleapis.com/domain-images/60b1f285-d77c-444a-b734-1bc1efd2c472/products/gallery_bd17d9a3-cd93-44a9-9b44-f017a1c7a329.jpg",
+    descricao:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. In adipisci aspernatur dolore, numquam veniam suscipit.",
+    foto: "./assets/images/banana-com-nutella.png",
     preco: 10.0,
   },
   {
     id: 3,
     sabor: "Chocolate Belga",
-    descricao: "Chocolate Belga",
-    foto: "https://storage.googleapis.com/domain-images/60b1f285-d77c-444a-b734-1bc1efd2c472/products/gallery_bd17d9a3-cd93-44a9-9b44-f017a1c7a329.jpg",
+    descricao:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. In adipisci aspernatur dolore, numquam veniam suscipit.",
+    foto: "./assets/images/chocolate-belga.png",
     preco: 7.0,
+  },
+  {
+    id: 4,
+    sabor: "Limão",
+    descricao:
+      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. In adipisci aspernatur dolore, numquam veniam suscipit.",
+    foto: "./assets/images/limao.png",
+    preco: 14.0,
   },
 ];
 
+// Rota para printar Hello Blue...
 app.get("/", function (req, res) {
   res.send("Hello Blue Módulo 3 Fullstack");
 });
 
-// Get all
+// Rota de Get all
 app.get("/paletas/todas-paletas", (req, res) => {
   res.send(paletas);
 });
 
-// Get by id
+// Rota de Get by id
 app.get("/paletas/paleta/:id", (req, res) => {
   const parametroId = Number(req.params.id);
   const escolhaPaleta = paletas.find((paleta) => paleta.id === parametroId);
   res.send(escolhaPaleta);
 });
 
+// Fazendo o servidor rodar em um localhost
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port} 🚀`);
 });
