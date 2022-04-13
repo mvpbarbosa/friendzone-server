@@ -1,0 +1,23 @@
+{
+  "name": "elgeladon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvpbarbosa/elgeladon.git"
+  },
+  "keywords": [],
+  "author": "Marcos Barbosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mvpbarbosa/elgeladon/issues"
+  },
+  "homepage": "https://github.com/mvpbarbosa/elgeladon#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
