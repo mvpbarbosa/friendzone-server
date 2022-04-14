@@ -53,13 +53,6 @@ app.get("/", function (req, res) {
   res.send("Hello Blue Módulo 3 Fullstack");
 });
 
-// Rota de Get by id
-app.get("/paletas/paleta/:id", (req, res) => {
-  const parametroId = Number(req.params.id);
-  const escolhaPaleta = paletas.find((paleta) => paleta.id === parametroId);
-  res.send(escolhaPaleta);
-});
-
 // Fazendo o servidor rodar em um localhost
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port} 🚀`);
