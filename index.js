@@ -53,11 +53,6 @@ app.get("/", function (req, res) {
   res.send("Hello Blue Módulo 3 Fullstack");
 });
 
-// Rota de Get all
-app.get("/paletas/todas-paletas", (req, res) => {
-  res.send(paletas);
-});
-
 // Rota de Get by id
 app.get("/paletas/paleta/:id", (req, res) => {
   const parametroId = Number(req.params.id);
