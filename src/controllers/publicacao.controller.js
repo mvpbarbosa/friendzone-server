@@ -1,7 +1,14 @@
 const publicacoesService = require("../services/publicacao.service.js");
 
-const findAllPublicacoesController = (req, res) => {
-  const publicacoes = publicacoesService.findAllPublicacoesService();
+const findAllPublicacoesController = async (req, res) => {
+  const publicacoes = await publicacoesService.findAllPublicacoesService();
+
+  if (publicacoes.length == 0) {
+    return res
+      .status(404)
+      .send({ message: "Não existe nenhuma publicação cadastrada!" });
+  }
+
   res.send(publicacoes);
 };
 
