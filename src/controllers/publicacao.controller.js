@@ -1,4 +1,5 @@
 const publicacoesService = require("../services/publicacao.service.js");
+const mongoose = require("mongoose");
 
 const findAllPublicacoesController = async (req, res) => {
   const publicacoes = await publicacoesService.findAllPublicacoesService();
@@ -12,13 +13,15 @@ const findAllPublicacoesController = async (req, res) => {
   res.send(publicacoes);
 };
 
-const findByIdPublicacaoController = (req, res) => {
-  const parametroId = Number(req.params.id);
-  if (!parametroId) {
+const findByIdPublicacaoController = async (req, res) => {
+  const idParam = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
     return res.status(400).send({ message: "ID inválido" });
   }
-  const escolhaPublicacao =
-    publicacoesService.findByIdPublicacaoService(parametroId);
+
+  const escolhaPublicacao = await publicacoesService.findByIdPublicacaoService(
+    idParam
+  );
 
   if (!escolhaPublicacao) {
     return res.status(404).send({ message: "Publicação não encontrada!" });
@@ -26,33 +29,41 @@ const findByIdPublicacaoController = (req, res) => {
   res.send(escolhaPublicacao);
 };
 
-const createPublicacaoController = (req, res) => {
+const createPublicacaoController = async (req, res) => {
   const publicacao = req.body;
+
   if (
     !publicacao ||
-    !publicacao.nome ||
     !publicacao.foto ||
+    !publicacao.nome ||
+    !publicacao.dataHora ||
     !publicacao.texto
   ) {
     return res.status(400).send({
-      mensagem:
-        "Você naõ preencheu todos os dados para adicionar uma nova paleta ao cardápio!",
+      message:
+        "Você naõ preencheu todos os dados para criar uma nova publicação!",
     });
   }
-  const newPublicacao = publicacoesService.createPublicacaoService(publicacao);
-  res.send(newPublicacao);
+
+  const newPublicacao = await publicacoesService.createPublicacaoService(
+    publicacao
+  );
+  res.status(201).send(newPublicacao);
 };
 
-const updatePublicacaoController = (req, res) => {
-  const idParam = Number(req.params.id);
-  const publicacaoEdit = req.body;
-  if (!idParam) {
-    return res.status(404).send({ message: "Publicação não encontrada!" });
+const updatePublicacaoController = async (req, res) => {
+  const idParam = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
+    return res.status(400).send({ message: "ID inválido" });
   }
+
+  const publicacaoEdit = req.body;
 
   if (
     !publicacaoEdit ||
     !publicacaoEdit.nome ||
+    !publicacaoEdit.dataHora ||
     !publicacaoEdit.texto ||
     !publicacaoEdit.foto
   ) {
@@ -61,19 +72,22 @@ const updatePublicacaoController = (req, res) => {
     });
   }
 
-  const updatedPublicacao = publicacoesService.updatePublicacaoService(
+  const updatedPublicacao = await publicacoesService.updatePublicacaoService(
     idParam,
     publicacaoEdit
   );
   res.send(updatedPublicacao);
 };
 
-const deletePublicacaoController = (req, res) => {
-  const idParam = Number(req.params.id);
-  if (!idParam) {
-    return res.status(404).send({ message: "Paleta não encontrada!" });
+const deletePublicacaoController = async (req, res) => {
+  const idParam = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(idParam)) {
+    return res.status(400).send({ message: "ID inválido" });
   }
-  publicacoesService.deletePublicacaoService(idParam);
+
+  await publicacoesService.deletePublicacaoService(idParam);
+
   res.send({ message: "Publicacao deletada com sucesso!" });
 };
 

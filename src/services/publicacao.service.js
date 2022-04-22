@@ -1,30 +1,3 @@
-monName = new Array(
-  "janeiro",
-  "fevereiro",
-  "março",
-  "abril",
-  "maio",
-  "junho",
-  "agosto",
-  "outubro",
-  "novembro",
-  "dezembro"
-);
-now = new Date();
-
-var dataAtual = new Date();
-var dia = dataAtual.getDate();
-var mes = dataAtual.getMonth() + 1;
-var ano = dataAtual.getFullYear();
-var horas = dataAtual.getHours();
-var minutos = dataAtual.getMinutes();
-
-if (minutos <= 9) {
-  minutos = "0" + minutos;
-}
-
-
-
 const Publicacoes = require("../models/Publicacao.js");
 
 const findAllPublicacoesService = async () => {
@@ -32,66 +5,26 @@ const findAllPublicacoesService = async () => {
   return publicacoes;
 };
 
-const findByIdPublicacaoService = (parametroId) => {
-  return publicacoes.find((publicacao) => publicacao.id === parametroId);
+const findByIdPublicacaoService = async (parametroId) => {
+  const publicacao = await Publicacoes.findById(parametroId);
+  return publicacao;
 };
 
-const createPublicacaoService = (newPublicacao) => {
-  monName = new Array(
-    "janeiro",
-    "fevereiro",
-    "março",
-    "abril",
-    "maio",
-    "junho",
-    "agosto",
-    "outubro",
-    "novembro",
-    "dezembro"
-  );
-  now = new Date();
-
-  var dataAtual = new Date();
-  var dia = dataAtual.getDate();
-  var mes = dataAtual.getMonth() + 1;
-  var ano = dataAtual.getFullYear();
-  var horas = dataAtual.getHours();
-  var minutos = dataAtual.getMinutes();
-
-  if (minutos <= 9) {
-    minutos = "0" + minutos;
-  }
-
-  const newId = publicacoes.length + 1;
-  newPublicacao.id = newId;
-
-  const newDataHora = `${dia} de ${
-    monName[mes - 1]
-  } de ${ano} às ${horas}:${minutos}`;
-  newPublicacao.dataHora = newDataHora;
-
-  publicacoes.push(newPublicacao);
-
-  const newPublicacoesOrdenadas = publicacoes.sort(function (a, b) {
-    return a.id < b.id ? 1 : b.id < a.id ? -1 : 0;
-  });
-  return newPublicacoesOrdenadas;
+const createPublicacaoService = async (newPublicacao) => {
+  const publicacaoCreated = await Publicacoes.create(newPublicacao);
+  return publicacaoCreated;
 };
 
-const updatePublicacaoService = (id, publicacaoEdited) => {
-  publicacaoEdited["id"] = id;
-  const publicacaoIndex = publicacoes.findIndex(
-    (publicacao) => publicacao.id === id
+const updatePublicacaoService = async (id, publicacaoEdited) => {
+  const publicacaoUpdate = await Publicacoes.findByIdAndUpdate(
+    id,
+    publicacaoEdited
   );
-  publicacoes[publicacaoIndex] = publicacaoEdited;
-  return publicacaoEdited;
+  return publicacaoUpdate;
 };
 
-const deletePublicacaoService = (id) => {
-  const publicacaoIndex = publicacoes.findIndex(
-    (publicacao) => publicacao.id == id
-  );
-  return publicacoes.splice(publicacaoIndex, 1);
+const deletePublicacaoService = async (id) => {
+  return await Publicacoes.findByIdAndDelete(id);
 };
 
 module.exports = {
