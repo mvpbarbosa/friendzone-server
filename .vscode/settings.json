@@ -8,7 +8,7 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.fontFamily": "Cascadia Code",
-  "editor.fontLigatures": true,
+  "editor.fontFamily": "Consolas",
+  "editor.fontLigatures": true, 
   "editor.quickSuggestions.comments": true
 }

@@ -6,7 +6,7 @@ const connectToDatabase = () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then(() => console.log("MongoDb CONNECT"))
+    .then(() => console.log("MongoDb CONNECT" ))
     .catch((error) =>
       console.log(`Erro ao conectar com o MongoDB, erro: ${error}`)
     );
