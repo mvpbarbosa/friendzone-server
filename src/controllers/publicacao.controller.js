@@ -2,7 +2,7 @@ const publicacoesService = require("../services/publicacao.service.js");
 const mongoose = require("mongoose");
 
 const findAllPublicacoesController = async (req, res) => {
-  const publicacoes = await publicacoesService.findAllPublicacoesService();
+  const publicacoes = await publicacoesService.findAllPublicacoesService(); 
   if (publicacoes.length === 0) {
     return res
       .status(404)
@@ -13,13 +13,13 @@ const findAllPublicacoesController = async (req, res) => {
 
 const findByIdPublicacaoController = async (req, res) => {
   const idParam = req.params.id;
-  const escolhaPublicacao = await publicacoesService.findByIdPublicacaoService(
+  const chosenPublicacao = await publicacoesService.findByIdPublicacaoService(
     idParam
   );
-  if (!escolhaPublicacao) {
+  if (!chosenPublicacao) {
     return res.status(404).send({ message: "Publicação não encontrada!" });
   }
-  res.status(201).send(escolhaPublicacao);
+  res.status(201).send(chosenPublicacao);
 };
 
 const createPublicacaoController = async (req, res) => {
@@ -32,10 +32,10 @@ const createPublicacaoController = async (req, res) => {
 
 const updatePublicacaoController = async (req, res) => {
   const idParam = req.params.id;
-  const publicacaoEdit = req.body;
+  const editPublicacao = req.body;
   const updatedPublicacao = await publicacoesService.updatePublicacaoService(
     idParam,
-    publicacaoEdit
+    editPublicacao
   );
   res.send(updatedPublicacao);
 };
