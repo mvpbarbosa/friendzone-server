@@ -26,7 +26,21 @@ const validObjectBody = (req, res, next) => {
   next();
 };
 
+const validObjectBodyFavorite = (req, res, next) => {
+  const favorite = req.body;
+
+  favorite.forEach((item) => {
+    if (!item || item.publicacaoId) {
+      return res
+        .status(400)
+        .send({ message: "Envie todos os campos da publicação" });
+    }
+  });
+  next();
+};
+
 module.exports = {
   validId,
   validObjectBody,
+  validObjectBodyFavorite,
 };
