@@ -2,7 +2,7 @@ const publicacoesService = require("../services/publicacao.service.js");
 const mongoose = require("mongoose");
 
 const findAllPublicacoesController = async (req, res) => {
-  const publicacoes = await publicacoesService.findAllPublicacoesService(); 
+  const publicacoes = await publicacoesService.findAllPublicacoesService();
   if (publicacoes.length === 0) {
     return res
       .status(404)
