@@ -1,0 +1,310 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API FriendZone",
+    "description": "API para CRUD de publicações e publicações favoritas",
+    "termsOfService": "",
+    "contact": {
+      "email": "mvpbarbosa16@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/publicacoes",
+      "description": "API de teste"
+    },
+    {
+      "url": "https://api-friendzone.herokuapp.com/publicacoes",
+      "description": "API de produção"
+    }
+  ],
+  "paths": {
+    "/all-publicacoes": {
+      "get": {
+        "summary": "Lista de todas as publicações",
+        "description": "Rota responsável por listar todas as publicações",
+        "tags": ["Publicações"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Publicacoes"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/one-publicacao/{id}": {
+      "get": {
+        "summary": "Busca uma publicação pelo ID",
+        "description": "Rota responsável por buscar uma publicação pelo ID",
+        "tags": ["Publicações"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação para a busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Publicacoes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-publicacao": {
+      "post": {
+        "summary": "Cadastrar uma publicação",
+        "description": "Rota responsável por cadastrar uma publicação",
+        "tags": ["Publicações"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacoes"
+              },
+              "examples": {
+                "Paletas": {
+                  "value": {
+                    "nome": "Marcos Barbosa",
+                    "dataHora": "22 de abril de 2022",
+                    "foto": "https://i.imgflip.com/66i9f6.jpg",
+                    "texto": "Olá, estou feliz!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Publicacoes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-publicacao/{id}": {
+      "put": {
+        "summary": "Editar uma publicação pelo ID",
+        "description": "Rota responsável por editar uma publicação pelo ID",
+        "tags": ["Publicações"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação para a busca",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacoes"
+              },
+              "examples": {
+                "Publicações": {
+                  "value": {
+                    "nome": "Marcos Barbosa (Editado)",
+                    "dataHora": "22 de abril de 2022",
+                    "foto": "https://i.imgflip.com/66i9f6.jpg",
+                    "texto": "Olá, estou feliz!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Publicacoes"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete-publicacao/{id}": {
+      "delete": {
+        "summary": "Apagar uma publicação pelo ID",
+        "description": "Rota responsável por apagar uma publicação pelo ID",
+        "tags": ["Publicações"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da publicação para deleção",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/all-favorites": {
+      "get": {
+        "summary": "Lista de todos as publicações favoritas",
+        "description": "Rota responsável por listar todas as publicações favoritas",
+        "tags": ["Favoritos"],
+        "responses": {
+          "404": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Favoritos"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create-favorites": {
+      "post": {
+        "summary": "Cadastrar vários itens no como favoritos",
+        "description": "Rota responsável por cadastrar vários itens como favoritos",
+        "tags": ["Favoritos"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Favoritos"
+              },
+              "examples": {
+                "Favoritos": {
+                  "value": [
+                    {
+                      "publicacaoId": "624230fdcd38269205c82197"
+                    },
+                    {
+                      "publicacaoId": "62423c1e618f4a4738a5ee75"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Favoritos"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete-favorites": {
+      "delete": {
+        "summary": "Apagar todos os itens favoritos",
+        "description": "Rota responsável por apagar todos os itens favoritos",
+        "tags": ["Favoritos"],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Publicacoes": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "dataHora": {
+            "type": "string"
+          },
+          "foto": {
+            "type": "string"
+          },
+          "texto": {
+            "type": "string"
+          }
+        }
+      },
+      "Favoritos": {
+        "type": "object",
+        "properties": {
+          "publicacaoId": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
