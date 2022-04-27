@@ -1,11 +1,12 @@
 // Exportando dependências
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const routes = require("./src/routes/publicacao.route.js");
 const connectToDatabase = require("./src/database/database.js");
 
 // Constantes
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
 connectToDatabase();
@@ -17,5 +18,5 @@ app.use("/publicacoes", routes);
 
 // Fazendo o servidor rodar em um localhost
 app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port} 🚀`);
+  console.log(`Servidor rodando na porta ${port} 🚀`);
 });
