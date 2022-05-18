@@ -11,11 +11,11 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/publicacoes",
+      "url": "http://localhost:3005/publicacoes",
       "description": "API de teste"
     },
     {
-      "url": "https://api-friendzone.herokuapp.com/publicacoes",
+      "url": "https://api-friendszone-.herokuapp.com/publicacoes",
       "description": "API de produção"
     }
   ],
